@@ -171,15 +171,21 @@ def create_mask(im_shape: Tuple[int, int],
     """
 
     mask = np.ones(im_shape)
-    npix = im_shape[0]
+    npix_i = im_shape[0]
+    npix_j = im_shape[1]
+    npix=min(npix_i,npix_j)
 
     if size[0] is not None or size[1] is not None:
 
-        if npix % 2 == 0:
-            x_grid = y_grid = np.linspace(-npix / 2 + 0.5, npix / 2 - 0.5, npix)
+        if npix_i % 2 == 0:
+            y_grid = np.linspace(-npix_i / 2 + 0.5, npix_i / 2 - 0.5, npix_i)
         else:
-            x_grid = y_grid = np.linspace(-(npix - 1) / 2, (npix - 1) / 2, npix)
-
+            y_grid = np.linspace(-(npix_i - 1) / 2, (npix_i - 1) / 2, npix_i)
+        
+        if npix_j % 2 == 0:
+            x_grid = np.linspace(-npix_j / 2 + 0.5, npix_j / 2 - 0.5, npix_j)
+        else:
+            x_grid = np.linspace(-(npix_j - 1) / 2, (npix_j - 1) / 2, npix_j)
         xx_grid, yy_grid = np.meshgrid(x_grid, y_grid)
         rr_grid = np.sqrt(xx_grid**2 + yy_grid**2)
 
