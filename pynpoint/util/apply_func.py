@@ -62,13 +62,13 @@ def subtract_line(image_in: np.ndarray,
 
     elif combine == 'median':
         col_median = np.nanmedian(image_tmp, axis=0)
-        col_2d = np.tile(col_median, (im_shape[1], 1))
+        col_2d = np.tile(col_median, (im_shape[0], 1))
 
         image_tmp -= col_2d
         image_tmp[mask == 0.] = np.nan
 
         row_median = np.nanmedian(image_tmp, axis=1)
-        row_2d = np.tile(row_median, (im_shape[0], 1))
+        row_2d = np.tile(row_median, (im_shape[1], 1))
         row_2d = np.rot90(row_2d)  # 90 deg rotation in clockwise direction
 
         subtract = col_2d + row_2d
